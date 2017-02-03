@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cat > Make <<EOF
+# Include this directory in the search path
+-R ./src Complexity
+
+# Source files (filled by configure)
+EOF
+
+find src -name "*.v" >> Make
+
+${COQBIN}coq_makefile -f Make -o Makefile
