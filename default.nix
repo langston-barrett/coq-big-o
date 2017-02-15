@@ -23,12 +23,9 @@ let
     owner  = "siddharthist";
     repo   = "coq-typeclass-hierarchy";
     # This is the commit that made default.nix into a function
-    rev    = "842a514b791bd1a772aedcd0514a26928a928770";
-    sha256 = "11x2dxgdya0wvibl0k5g52izxg9si7yks2y93cyf6j87cn8xy3s1";
+    rev    = "c079b02364c94b7aa18fc6cb02921ad6a76eb20e";
+    sha256 = "1l5h02k0j2df4r8jvvf8nws777rda4piy2mfmvl5k2fgwz9slb1r";
   }) { };
-
-  # coq_typeclass_hierarchy = pkgs.callPackage "${coq_typeclass_hierarchy_src}" { };
-  # self = with pinned_pkgs; callPackage ./default.nix { };
 
 in with pinned_pkgs; stdenv.mkDerivation {
   name = "coq${coq.coq-version}-complexity";

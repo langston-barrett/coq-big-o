@@ -1,0 +1,6 @@
+  (* Lemma mon_unit_unique' : forall i : R, (∃ x, x + i = x) → i = mon_unit. *)
+  (*   intros i Hyp. *)
+  (*   destruct Hyp as [x Hyp]. *)
+  (*   apply (left_cancellation (+) x). *)
+  (*   now rewrite right_identity. *)
+  (* Qed. *)
