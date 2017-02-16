@@ -12,6 +12,6 @@ after_success: |
       git status
       git -c user.name='travis' -c user.email='travis' commit -m "[auto] [docs] $TRAVIS_COMMIT_MESSAGE"
       git remote add docs "https://siddharthist:${GITHUB_API_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git"
-      git push --quiet --force docs gh-pages
+      git push --force docs gh-pages
     fi
   fi

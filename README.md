@@ -34,6 +34,7 @@ Bachmann-Landau notations based on seminormed vector spaces.
   - [x] Big Θ
   - [x] little o
   - [x] little ω
+
  - [x] (Optional) Unicode notation: `f ∈ ω(g) → g ∈ Ω(f)`
 
 ### Theorems & Lemmas
