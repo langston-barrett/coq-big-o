@@ -1,17 +1,12 @@
-Require Import Complexity.BigO.Notation.
-Require Import Complexity.Util.DecField.
+Require Import Complexity.BigO.Notation. (* exports definitions *)
+Require Import Complexity.Util.Field.
+Require Import Complexity.Util.Rationals.
 Require Import MathClasses.interfaces.abstract_algebra.
-Require Import MathClasses.interfaces.vectorspace.
-Require Import MathClasses.interfaces.orders.
+Require Import MathClasses.interfaces.rationals.
+Require Import MathClasses.orders.rationals.
 
 Section BigThetaReflexive.
-  Context `{@SemiNormedSpace
-              K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
-           }.
-  Context `{!FullPseudoSemiRingOrder Kle Klt}.
-
+  Context `{Rationals R}.
   Lemma big_Theta_refl : reflexive _ big_Theta.
     unfold reflexive.
     intros f.
@@ -21,11 +16,11 @@ Section BigThetaReflexive.
       unfold big_O.
       exists 1. (* our constant k *)
       split.
-       - exact zero_lt_one_dec.
+       - exact zero_lt_one.
        - exists 1. (* our constant *)
         intros.
         split.
-         * exact zero_lt_one_dec.
+         * exact zero_lt_one.
          * intros n one_leq_n.
            rewrite left_identity.
            apply reflexivity.
@@ -35,10 +30,10 @@ Section BigThetaReflexive.
       unfold big_Omega.
       exists 1. (* our constant *)
       split.
-       - exact zero_lt_one_dec.
+       - exact zero_lt_one.
        - exists 1. (* our constant *)
          split.
-         * exact zero_lt_one_dec.
+         * exact zero_lt_one.
          * intros n one_leq_n.
            now rewrite left_identity.
     }

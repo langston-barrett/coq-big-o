@@ -1,10 +1,10 @@
-Require Complexity.Util.Admitted.
-Require Import Complexity.BigO.Notation.
-Require Import Complexity.Util.DecField.
+Require Import Complexity.BigO.Definition.
+Require Import Complexity.Util.Admitted.
+Require Import Complexity.Util.Rationals.
 Require Import MathClasses.interfaces.abstract_algebra.
+Require Import MathClasses.interfaces.rationals.
+Require Import MathClasses.orders.rationals.
 Require Import MathClasses.interfaces.orders.
-Require Import MathClasses.interfaces.vectorspace.
-Require Import MathClasses.orders.dec_fields.
 
 (**
   Informal proof/overview:
@@ -26,22 +26,16 @@ Require Import MathClasses.orders.dec_fields.
   *)
 
 Section BigThetaSymmetry.
-  Context `{@SemiNormedSpace
-              K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
-           }.
-  Context `{!FullPseudoSemiRingOrder Kle Klt}.
-  Context `{forall x y : K, Decision (x = y)}.
+  Context `{Rationals R}.
 
   Lemma big_Theta_sym: symmetric _ big_Theta.
     unfold symmetric.
-    intros f g big_Theta_f_g.
+    intros f g H0.
     unfold big_Theta in *.
     split.
     { (* big_O x y /\ big_Omega x y -> big_O y x *)
       unfold big_O.
-      destruct big_Theta_f_g as [HO HΩ].
+      destruct H0 as [HO HΩ].
 
       (* Unfurl our hypotheses *)
       unfold big_Omega in HΩ.
@@ -67,7 +61,7 @@ Section BigThetaSymmetry.
             (now apply MathClasses.orders.dec_fields.pos_dec_recip_compat).
 
         (* y n -> k_O / k_O * y n *)
-        setoid_replace (∥g n∥) with (1 * ∥g n∥) by (now rewrite left_identity).
+        setoid_replace (g n) with (1 * g n) by (now rewrite left_identity).
         (* This is awkward, but causes Coq not to automagically multiply
             (/ k_O) * k_O *)
         rewrite <- mult_inv_eq_1.
@@ -81,7 +75,7 @@ Section BigThetaSymmetry.
     { (* big_O x y /\ big_Omega x y -> big_Omega y x *)
       unfold big_Omega.
       (* Unfurl our assumptions *)
-      destruct big_Theta_f_g as [HO HΩ].
+      destruct H0 as [HO HΩ].
       unfold big_O in HO.
       destruct HO as [k_O HO].
       destruct HO as [k_O_gt_0 HO].
@@ -103,7 +97,7 @@ Section BigThetaSymmetry.
             (now apply MathClasses.orders.dec_fields.pos_dec_recip_compat).
 
         (* y n -> k_O / k_O * y n *)
-        setoid_replace (∥g n∥) with (1 * ∥g n∥) by (now rewrite left_identity).
+        setoid_replace (g n) with (1 * g n) by (now rewrite left_identity).
         (* This is awkward, but causes Coq not to automagically multiply
             (/ k_O) * k_O*)
         assert (mult_inv_eq_1 : (/ k_O) * k_O = 1) by

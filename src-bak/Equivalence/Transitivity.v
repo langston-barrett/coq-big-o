@@ -1,15 +1,15 @@
-Require Complexity.Util.Admitted.
-Require Import Complexity.BigO.Notation.
-Require Import Complexity.Util.DecField.
+Require Import Complexity.Util.Rationals.
 Require Import MathClasses.interfaces.abstract_algebra.
+Require Import MathClasses.interfaces.rationals.
+Require Import MathClasses.orders.rationals.
+Require Import MathClasses.orders.semirings.
 Require Import MathClasses.interfaces.orders.
-Require Import MathClasses.interfaces.vectorspace.
-Require Import MathClasses.orders.dec_fields.
+Require Import Complexity.BigO.Notation.
 
 (**
   Informal proof/overview:
 
-  Assume f,g,h:V→V such that f ∈ Θ(g) and g ∈ Θ(h). Then
+  Assume f,g,h:R→R such that f ∈ Θ(g) and g ∈ Θ(h). Then
 
   [f ∈ O(h)]
   By assumption,
@@ -43,37 +43,8 @@ Require Import MathClasses.orders.dec_fields.
   *)
 
 Section BigThetaTransitivity.
-  Context `{@SemiNormedSpace
-              K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
-           }.
-  Context `{!FullPseudoSemiRingOrder Kle Klt}.
-
+  Context `{Rationals R}.
   Lemma big_Theta_trans: transitive _ big_Theta.
-
-    (* Some arithmetic that will come in handy soon *)
-    assert (Harith : forall x y z : K, 0 < x -> 0 < y -> x + y ≤ z -> x ≤ z).
-    {
-      intros x y z zero_lt_x zero_lt_y x_plus_y.
-      (* TODO: decompose_le? *)
-      destruct (decompose_le x_plus_y) as [a Hyp].
-      destruct Hyp as [zero_le_a z_eq].
-
-      Check compose_le.
-      apply (compose_le x z (y + a)).
-      {
-        setoid_replace 0 with (0 + 0) by (now rewrite left_identity).
-        Check plus_le_compat.
-        apply (plus_le_compat 0 _ 0 _); try assumption.
-        now apply lt_le.
-      }
-      {
-        now rewrite associativity.
-      }
-    }
-
-
     unfold transitive.
     intros f g h.
     unfold big_Theta in *.
@@ -99,7 +70,7 @@ Section BigThetaTransitivity.
       exists (k_f_g * k_g_h).
       split.
       { (* 0 < k_f_g * k_g_h *)
-        apply mult_pos_gt_0;
+        apply Rationals.mult_pos_gt_0;
           assumption.
       }
       {
@@ -113,19 +84,33 @@ Section BigThetaTransitivity.
           intros n.
 
           (* Prove that our new n_0 is greater than the previous *)
-          intros n_ge_n0.
-          assert (n_ge_n0_f_g : n0_f_g ≤ ∥n∥) by (now apply (Harith n0_f_g n0_g_h)).
-          assert (n_ge_n0_g_h : n0_g_h ≤ ∥n∥) by
-              (rewrite commutativity in n_ge_n0; now apply (Harith n0_g_h n0_f_g)).
-          clear n_ge_n0.
+          assert (n0_gt_n0_f_g : n0_f_g < n0_f_g + n0_g_h) by
+            (now apply semirings.pos_plus_lt_compat_r).
+          assert (n0_gt_n0_g_h : n0_g_h < n0_f_g + n0_g_h) by
+            (now apply semirings.pos_plus_lt_compat_l).
 
-          assert (fn_le_gn : ∥f n∥ ≤ k_f_g * ∥g n∥) by (now apply HO_f_g).
-          assert (gn_le_hn : ∥g n∥ ≤ k_g_h * ∥h n∥) by (now apply HO_g_h).
+          intros n_ge_n0.
+
+          assert (n_ge_n0_f_g : n0_f_g ≤ n).
+          {
+            destruct n0_gt_n0_f_g as [? _].
+            transitivity (n0_f_g + n0_g_h); assumption.
+          }
+          assert (n_ge_n0_g_h : n0_g_h ≤ n).
+          {
+            destruct n0_gt_n0_g_h as [? _].
+            transitivity (n0_f_g + n0_g_h); assumption.
+          }
+
+          clear n_ge_n0 n0_gt_n0_f_g n0_gt_n0_g_h.
+
+          assert (fn_le_gn : f n ≤ k_f_g * g n) by (now apply HO_f_g).
+          assert (gn_le_hn : g n ≤ k_g_h * h n) by (now apply HO_g_h).
 
           clear HO_f_g HO_g_h.
 
-          transitivity (k_f_g * ∥g n∥); try assumption.
-          rewrite (Admitted.order_preserving_mult_le (∥g n∥) (k_g_h * ∥h n∥));
+          transitivity (k_f_g * g n); try assumption.
+          rewrite (Admitted.order_preserving_mult_le (g n) (k_g_h * h n));
             try assumption.
           now rewrite associativity.
         }
@@ -151,7 +136,7 @@ Section BigThetaTransitivity.
       exists (k_f_g * k_g_h).
       split.
       { (* 0 < k_f_g * k_g_h *)
-        apply mult_pos_gt_0;
+        apply Rationals.mult_pos_gt_0;
           assumption.
       }
       {
@@ -165,21 +150,35 @@ Section BigThetaTransitivity.
           intros n.
 
           (* Prove that our new n_0 is greater than the previous *)
-          intros n_ge_n0.
-          assert (n_ge_n0_f_g : n0_f_g ≤ ∥n∥) by (now apply (Harith n0_f_g n0_g_h)).
-          assert (n_ge_n0_g_h : n0_g_h ≤ ∥n∥) by
-              (rewrite commutativity in n_ge_n0; now apply (Harith n0_g_h n0_f_g)).
-          clear n_ge_n0.
+          assert (n0_gt_n0_f_g : n0_f_g < n0_f_g + n0_g_h) by
+            (now apply semirings.pos_plus_lt_compat_r).
+          assert (n0_gt_n0_g_h : n0_g_h < n0_f_g + n0_g_h) by
+            (now apply semirings.pos_plus_lt_compat_l).
 
-          assert (fn_le_gn : (k_f_g * ∥g n∥) ≤ ∥f n∥) by (now apply HOm_f_g).
-          assert (gn_le_hn : (k_g_h * ∥h n∥) ≤ ∥g n∥) by (now apply HOm_g_h).
+          intros n_ge_n0.
+
+          assert (n_ge_n0_f_g : n0_f_g ≤ n).
+          {
+            destruct n0_gt_n0_f_g as [? _].
+            transitivity (n0_f_g + n0_g_h); assumption.
+          }
+          assert (n_ge_n0_g_h : n0_g_h ≤ n).
+          {
+            destruct n0_gt_n0_g_h as [? _].
+            transitivity (n0_f_g + n0_g_h); assumption.
+          }
+
+          clear n_ge_n0 n0_gt_n0_f_g n0_gt_n0_g_h.
+
+          assert (fn_le_gn : k_f_g * g n ≤ f n) by (now apply HOm_f_g).
+          assert (gn_le_hn : k_g_h * h n ≤ g n) by (now apply HOm_g_h).
 
           clear HOm_f_g HOm_g_h.
 
-          transitivity (k_f_g * ∥g n∥); try assumption.
+          transitivity (k_f_g * g n); try assumption.
           rewrite <- associativity.
           rewrite (Complexity.Util.Admitted.order_preserving_mult_le
-                                   (k_g_h * ∥h n∥) (∥g n∥));
+                                   (k_g_h * h n) (g n));
             now try assumption.
         }
       }
