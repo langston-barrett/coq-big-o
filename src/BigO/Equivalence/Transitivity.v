@@ -60,11 +60,9 @@ Section BigThetaTransitivity.
       destruct (decompose_le x_plus_y) as [a Hyp].
       destruct Hyp as [zero_le_a z_eq].
 
-      Check compose_le.
       apply (compose_le x z (y + a)).
       {
         setoid_replace 0 with (0 + 0) by (now rewrite left_identity).
-        Check plus_le_compat.
         apply (plus_le_compat 0 _ 0 _); try assumption.
         now apply lt_le.
       }
