@@ -24,16 +24,6 @@ End AdmittedSemiring.
  stronger setting, and I'm not sure it's true for weaker strutures like
  Semirings.
  *)
-Section AdmittedField.
-  Context `{@Field F Ae Aplus Amult Azero Aone Aneg strong_setoids.default_apart Arecip}.
-  Context `{@SemiRingOrder F Ae Aplus Amult Azero Aone Ale}.
-  Context `{@PseudoSemiRingOrder F Ae strong_setoids.default_apart Aplus Amult Azero Aone Alt}.
-  Context `{@FullPartialOrder F Ae strong_setoids.default_apart Ale Alt}.
-
-  Lemma zero_le_one : (0 : F) ≤ (1 : F).
-  Admitted.
-End AdmittedField.
-
 Section AdmittedDecField.
   Context `{DecField K}.
   Context `{!TrivialApart K} `{!FullPseudoSemiRingOrder Kle Klt}.
