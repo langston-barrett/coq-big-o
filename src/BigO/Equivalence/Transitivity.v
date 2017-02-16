@@ -1,6 +1,8 @@
 Require Complexity.Util.Admitted.
 Require Import Complexity.BigO.Notation.
+Require Import Complexity.BigO.PartialOrder.Transitivity.
 Require Import Complexity.Util.DecField.
+Require Import Coq.Classes.RelationClasses.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.
@@ -12,19 +14,7 @@ Require Import MathClasses.orders.dec_fields.
   Assume f,g,h:V→V such that f ∈ Θ(g) and g ∈ Θ(h). Then
 
   [f ∈ O(h)]
-  By assumption,
-    - ∃ k_g, n_g such that ∀ n > n_g, f(n) ≤ k_g * g(n)
-    - ∃ k_h, n_h such that ∀ n > n_h, g(n) ≤ k_h * h(n)
-
-  then, ∀ n > max(n_g, n_h),
-    - g(n) ≤ k_h * h(n)
-    - k_g * g(n) ≤ (k_g * k_h) * h(n)
-  and
-    - f(n) ≤ k_g * g(n)
-  so by transitivity of ≤,
-    - f(n) ≤ k_g * g(n) ≤ (k_g * k_h) * h(n)
-    - f(n) ≤ (k_g * k_h) * h(n)
-  hence, f ∈ O(h).
+    Proved in another file.
 
   [f ∈ Ω(h)]
   By assumption,
@@ -40,7 +30,7 @@ Require Import MathClasses.orders.dec_fields.
     - (k_g * k_h) * h(n) ≤ k_g * g(n) ≤ f(n)
     - (k_g * k_h) * h(n) ≤ ≤ f(n)
   hence, f ∈ Ω(h).
-  *)
+ *)
 
 Section BigThetaTransitivity.
   Context `{@SemiNormedSpace
@@ -78,56 +68,7 @@ Section BigThetaTransitivity.
     intros H_f_g H_g_h;
       split.
     { (* f ∈ O(h) *)
-      unfold big_O.
-
-      (* Unfurl our hypothesis: f ∈ O(g) *)
-      destruct H_f_g as [HO_f_g _].
-      destruct HO_f_g as [k_f_g HO_f_g].
-      destruct HO_f_g as [k_f_g_gt_0 HO_f_g].
-      destruct HO_f_g as [n0_f_g HO_f_g].
-      destruct HO_f_g as [n0_f_g_gt_0 HO_f_g].
-
-      (* Unfurl our hypothesis: g ∈ O(h) *)
-      destruct H_g_h as [HO_g_h _].
-      destruct HO_g_h as [k_g_h HO_g_h].
-      destruct HO_g_h as [k_g_h_gt_0 HO_g_h].
-      destruct HO_g_h as [n0_g_h HO_g_h].
-      destruct HO_g_h as [n0_g_h_gt_0 HO_g_h].
-
-      exists (k_f_g * k_g_h).
-      split.
-      { (* 0 < k_f_g * k_g_h *)
-        apply mult_pos_gt_0;
-          assumption.
-      }
-      {
-        exists (n0_f_g + n0_g_h).
-
-        split.
-        { (* 0 < n0_f_g + n0_g_h *)
-          apply semirings.plus_lt_compat_r; assumption.
-        }
-        {
-          intros n.
-
-          (* Prove that our new n_0 is greater than the previous *)
-          intros n_ge_n0.
-          assert (n_ge_n0_f_g : n0_f_g ≤ ∥n∥) by (now apply (Harith n0_f_g n0_g_h)).
-          assert (n_ge_n0_g_h : n0_g_h ≤ ∥n∥) by
-              (rewrite commutativity in n_ge_n0; now apply (Harith n0_g_h n0_f_g)).
-          clear n_ge_n0.
-
-          assert (fn_le_gn : ∥f n∥ ≤ k_f_g * ∥g n∥) by (now apply HO_f_g).
-          assert (gn_le_hn : ∥g n∥ ≤ k_g_h * ∥h n∥) by (now apply HO_g_h).
-
-          clear HO_f_g HO_g_h.
-
-          transitivity (k_f_g * ∥g n∥); try assumption.
-          rewrite (order_preserving_mult_le (∥g n∥) (k_g_h * ∥h n∥));
-            try assumption.
-          now rewrite associativity.
-        }
-      }
+      now apply (big_O_trans f g h).
     }
     { (* f ∈ Ω(h) *)
       unfold big_Omega.
