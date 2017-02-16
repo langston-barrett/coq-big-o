@@ -49,6 +49,7 @@ Section BigThetaTransitivity.
               Ve Vop Vunit Vnegate smkv
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
+  Context `{!TotalOrder Kle}.
 
   Lemma big_Theta_trans: transitive _ big_Theta.
 
@@ -122,7 +123,7 @@ Section BigThetaTransitivity.
           clear HO_f_g HO_g_h.
 
           transitivity (k_f_g * ∥g n∥); try assumption.
-          rewrite (Admitted.order_preserving_mult_le (∥g n∥) (k_g_h * ∥h n∥));
+          rewrite (order_preserving_mult_le (∥g n∥) (k_g_h * ∥h n∥));
             try assumption.
           now rewrite associativity.
         }
@@ -175,8 +176,7 @@ Section BigThetaTransitivity.
 
           transitivity (k_f_g * ∥g n∥); try assumption.
           rewrite <- associativity.
-          rewrite (Complexity.Util.Admitted.order_preserving_mult_le
-                                   (k_g_h * ∥h n∥) (∥g n∥));
+          rewrite (order_preserving_mult_le (k_g_h * ∥h n∥) (∥g n∥));
             now try assumption.
         }
       }

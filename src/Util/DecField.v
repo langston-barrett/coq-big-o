@@ -7,6 +7,7 @@ Require Import MathClasses.orders.semirings.
 Section DecFieldLemmas.
   Context `{DecField K}.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
+  Context `{!TotalOrder Kle}.
 
   Lemma zero_ne_one : (0 : K) ≠ (1 : K).
     unfold not.
@@ -59,20 +60,31 @@ Section DecFieldLemmas.
     now apply lt_ne_flip.
   Qed.
 
+  Lemma order_preserving_mult_le : forall a b c : K, 0 < c -> a ≤ b -> c * a ≤ c * b.
+    intros a b c c_ge_0 a_le_b.
+    now apply (order_preserving ((.*.) c) a b).
+  Qed.
+
   Lemma order_preserving_mult : forall x : K, 0 < x -> OrderPreserving (mult x).
     intros x x_ge_0.
     repeat (split; try apply _).
     intros a b.
     intros a_leq_b.
-    now apply Admitted.order_preserving_mult_le.
+    now apply order_preserving_mult_le.
+  Qed.
+
+  Lemma order_preserving_mult_lt : forall a b c : K, 0 < c -> a < b -> c * a < c * b.
+    intros a b c c_gt_0 a_lt_b.
+    now apply (strictly_order_preserving ((.*.) c) a b).
   Qed.
 
   Require Import Coq.setoid_ring.Ring.
+  (* this is definitely in math-classes *)
   Add Ring R: (MathClasses.theory.rings.stdlib_ring_theory K).
   Lemma mult_pos_gt_0 : forall x y : K, 0 < x -> 0 < y -> 0 < x * y.
     intros x y x_ge_0 y_ge_0.
     assert (Hyp : x * 0 = 0) by ring.
     rewrite <- Hyp.
-    apply Admitted.order_preserving_mult_lt; assumption.
+    apply order_preserving_mult_lt; assumption.
   Qed.
 End DecFieldLemmas.

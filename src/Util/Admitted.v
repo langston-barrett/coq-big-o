@@ -2,31 +2,12 @@ Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.rationals.
 Require Import MathClasses.orders.rationals.
 Require Import MathClasses.orders.semirings.
+Require Import MathClasses.orders.dec_fields.
 Require Import MathClasses.interfaces.orders.
 
-Section AdmittedSemiring.
-  Context `{SemiRingOrder R}.
-  Context `{!StrictSemiRingOrder Rlt}.
-
-  (* Might be able to break this up into smaller cases on the signs of a and b *)
-  Lemma order_preserving_mult_le : forall a b c : R, 0 < c -> a ≤ b -> c * a ≤ c * b.
-    intros a b c c_ge_0 a_le_b.
-  Admitted.
-
-  Lemma order_preserving_mult_lt : forall a b c : R, 0 < c -> a < b -> c * a < c * b.
-    intros a b c c_gt_0 a_lt_b.
-  Admitted.
-
-End AdmittedSemiring.
-
-(*
- We require stronger assumptions for this lemma, because we only use it in the
- stronger setting, and I'm not sure it's true for weaker strutures like
- Semirings.
- *)
 Section AdmittedDecField.
   Context `{DecField K}.
-  Context `{!TrivialApart K} `{!FullPseudoSemiRingOrder Kle Klt}.
+  Context `{!FullPseudoSemiRingOrder Kle Klt}.
 
   Lemma zero_le_one_dec : (0 : K) ≤ (1 : K).
   Admitted.

@@ -19,11 +19,12 @@ Section Big_Theta_Equivalence.
               Ve Vop Vunit Vnegate smkv
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
+  Context `{!TotalOrder Kle}.
   Context `{forall x y : K, Decision (x = y)}.
 
   Add Parametric Relation : (V -> V) big_Theta
   reflexivity proved by (@big_Theta_refl K V Ke Kle Kzero Knegate Kabs Vnorm Kplus Kmult Kone Krecip Ve Vop Vunit Vnegate smkv H Klt FullPseudoSemiRingOrder0)
   symmetry proved by (@big_Theta_sym K V Ke Kle Kzero Knegate Kabs Vnorm Kplus Kmult Kone Krecip Ve Vop Vunit Vnegate smkv H Klt FullPseudoSemiRingOrder0 H0)
-  transitivity proved by (@big_Theta_trans K V Ke Kle Kzero Knegate Kabs Vnorm Kplus Kmult Kone Krecip Ve Vop Vunit Vnegate smkv H Klt FullPseudoSemiRingOrder0)
+  transitivity proved by (@big_Theta_trans K V Ke Kle Kzero Knegate Kabs Vnorm Kplus Kmult Kone Krecip Ve Vop Vunit Vnegate smkv H Klt FullPseudoSemiRingOrder0 TotalOrder0)
   as big_Theta_rel.
 End Big_Theta_Equivalence.
