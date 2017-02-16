@@ -5,7 +5,7 @@ Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.
 Require Import MathClasses.orders.dec_fields.
 
-Section OAndOmega.
+Section Facts.
   Context `{@SemiNormedSpace
               K V
               Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
@@ -87,4 +87,32 @@ Section OAndOmega.
       }
     }
   Qed.
-End OAndOmega.
+
+  (**
+   Little o is strictly more stringent than big O.
+   *)
+  Lemma o_implies_O : forall f g : (V -> V), f ∈ o(g) -> f ∈ O(g).
+    intros f g f_o_g.
+    unfold big_O.
+
+    exists 1.
+    split; try (apply zero_lt_one_dec).
+    destruct (f_o_g 1 zero_lt_one_dec) as [n0 [zero_lt_n0 ?]].
+    exists n0.
+    split; assumption.
+  Qed.
+
+  (**
+   Little ω is strictly more stringent than big Ω.
+   *)
+  Lemma omega_implies_Omega : forall f g : (V -> V), f ∈ ω(g) -> f ∈ Ω(g).
+    intros f g f_ω_g.
+    unfold big_Omega.
+
+    exists 1.
+    split; try (apply zero_lt_one_dec).
+    destruct (f_ω_g 1 zero_lt_one_dec) as [n0 [zero_lt_n0 ?]].
+    exists n0.
+    split; assumption.
+  Qed.
+End Facts.

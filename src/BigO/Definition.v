@@ -28,9 +28,9 @@ Section Definitions.
   Definition big_Theta (f g : V -> V) : Prop := big_O f g /\ big_Omega f g.
 
   Definition little_o (f g : V -> V) : Prop :=
-    forall k : K, exists n0 : K, 0 < k /\ 0 < n0 /\ forall n : V, n0 ≤ ∥n∥ -> ∥f n∥ ≤ k * ∥g n∥.
+    forall k : K, 0 < k -> exists n0 : K, 0 < n0 /\ forall n : V, n0 ≤ ∥n∥ -> ∥f n∥ ≤ k * ∥g n∥.
 
   Definition little_omega (f g : V -> V) : Prop :=
-    forall k : K, exists n0 : K, 0 < k /\ 0 < n0 /\ forall n : V, n0 ≤ ∥n∥ -> (k * ∥g n∥) ≤ ∥f n∥.
+    forall k : K, 0 < k -> exists n0 : K, 0 < n0 /\ forall n : V, n0 ≤ ∥n∥ -> (k * ∥g n∥) ≤ ∥f n∥.
 End Definitions.
 Arguments big_O {K} {H} {V} {H1} {n} {Kmult} {Kzero} _ _.

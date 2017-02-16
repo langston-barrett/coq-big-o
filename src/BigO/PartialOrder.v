@@ -9,6 +9,14 @@ Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.
 Require Import MathClasses.orders.dec_fields.
 
+(**
+ The Big-O relation between functions induces a partial order: it acts somewhat
+ like < on Ƶ, but not every two elements are related [1]. See the MathClasses
+ library for more information on the interface of a PartialOrder.
+
+ [1]: http://math.stackexchange.com/questions/703866/big-oh-and-big-theta-relations-confirmation
+ *)
+
 Section BigOPartialOrder.
   Context `{@SemiNormedSpace
               K V
