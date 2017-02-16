@@ -9,6 +9,20 @@ Bachmann-Landau notations based on seminormed vector spaces.
 
 ## Table of Contents
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+**Table of Contents**
+
+- [Big O Notation for Coq](#big-o-notation-for-coq)
+    - [Table of Contents](#table-of-contents)
+    - [Features](#features)
+        - [Definitions](#definitions)
+        - [Theorems & Lemmas](#theorems--lemmas)
+    - [API Documentation](#api-documentation)
+    - [Installation](#installation)
+        - [Related Work](#related-work)
+    - [Contributing](#contributing)
+
+<!-- markdown-toc end -->
 
 ## Features
 
