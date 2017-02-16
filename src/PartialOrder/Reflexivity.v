@@ -1,5 +1,5 @@
-Require Import Complexity.BigO.Notation.
-Require Import Complexity.Util.DecField.
+Require Import BigO.Notation.
+Require Import BigO.Util.DecField.
 Require Import Coq.Classes.RelationClasses.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.

@@ -2,7 +2,7 @@
 
 cat > Make <<EOF
 # Include this directory in the search path
--R ./src Complexity
+-R ./src BigO
 
 # Source files (filled by configure)
 EOF

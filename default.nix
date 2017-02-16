@@ -19,28 +19,20 @@ let
 
   ### Dependencies
   coq = pinned_pkgs.coq_8_5;
-  coq_typeclass_hierarchy = with pinned_pkgs; callPackage (fetchFromGitHub {
-    owner  = "siddharthist";
-    repo   = "coq-typeclass-hierarchy";
-    # This is the commit that made default.nix into a function
-    rev    = "c079b02364c94b7aa18fc6cb02921ad6a76eb20e";
-    sha256 = "1l5h02k0j2df4r8jvvf8nws777rda4piy2mfmvl5k2fgwz9slb1r";
-  }) { };
 
 in with pinned_pkgs; stdenv.mkDerivation {
-  name = "coq${coq.coq-version}-complexity";
+  name = "coq${coq.coq-version}-big-o";
   src = ./.;
   buildInputs = [
     coq
-    coq_typeclass_hierarchy
-    coqPackages_8_5.math-classes # TODO: this is a transitive dep. can we remove it?
+    coqPackages_8_5.math-classes
   ];
   enableParallelBuilding = true;
   installFlags = "COQLIB=$(out)/lib/coq/${coq.coq-version}/";
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/siddharthist/coq-complexity;
-    description = "A development of the fundamentals of complexity theory in Coq";
+    homepage = https://github.com/siddharthist/coq-big-o;
+    description = "A flexible yet easy-to-use formalization of Big O notation";
     maintainers = with maintainers; [ siddharthist ];
     platforms = coq.meta.platforms;
   };

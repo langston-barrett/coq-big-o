@@ -1,5 +1,5 @@
-Require Import Complexity.BigO.Notation.
-Require Import Complexity.Util.DecField.
+Require Import BigO.Notation.
+Require Import BigO.Util.DecField.
 Require Import Coq.Classes.RelationClasses.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
@@ -40,7 +40,6 @@ Section BigOTransitivity.
     assert (Harith : forall x y z : K, 0 < x -> 0 < y -> x + y ≤ z -> x ≤ z).
     {
       intros x y z zero_lt_x zero_lt_y x_plus_y.
-      (* TODO: decompose_le? *)
       destruct (decompose_le x_plus_y) as [a Hyp].
       destruct Hyp as [zero_le_a z_eq].
 

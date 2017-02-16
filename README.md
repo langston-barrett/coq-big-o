@@ -1,61 +1,101 @@
-# Complexity Theory in Coq
+# Big O Notation for Coq
 
-[![Build Status](https://travis-ci.org/siddharthist/coq-complexity.svg?branch=master)](https://travis-ci.org/siddharthist/coq-complexity)
+<!-- Shamelessly stolen readthedocs.io badge -->
+[![Build Status](https://travis-ci.org/siddharthist/coq-big-o.svg?branch=master)](https://travis-ci.org/siddharthist/coq-big-o)
+[![Documentation](https://readthedocs.org/projects/docs/badge/?version=latest)](https://siddharthist.github.io/coq-big-o/html/toc.html)
 
-This library formalizes basic notions of complexity: decision problems, function
-runtimes, Big-O notation, nondeterminism, complexity classes, and more.
+A flexible yet easy-to-use formalization of Big O, Big Theta, and more
+Bachmann-Landau notations based on seminormed vector spaces.
 
 ## Table of Contents
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
-**Table of Contents**
 
-- [Complexity Theory in Coq](#complexity-theory-in-coq)
-    - [Table of Contents](#table-of-contents)
-    - [](#)
-    - [Installation](#installation)
-    - [Usage](#usage)
-        - [Organization of Modules](#organization-of-modules)
-        - [Documentation](#documentation)
-    - [Contributing](#contributing)
-    - [Design and Related Work](#design-and-related-work)
-        - [Design](#design)
-        - [References](#references)
+## Features
 
-<!-- markdown-toc end -->
+### Definitions
 
-## 
+ - [x] Bachmann-Landau notations
+  - [x] Big O
+  - [x] Big Ω
+  - [x] Big Θ
+  - [x] little o
+  - [x] little ω
+ - [x] (Optional) Unicode notation
 
-## Installation
+### Theorems & Lemmas
 
-## Usage
+This is not an exhaustive list:
 
-### Organization of Modules
+ - [x] Big Θ as an equivalence relation on functions
+ - [x] Big O as a partial ordering on functions
+ - [x] Duality of Big O and Big Ω: f ∈ O(g) ↔ g ∈ Ω(f)
+ - [x] f ∈ o(g) → f ∈ O(g)
+ - [x] f ∈ ω(g) → f ∈ Ω(g)
+ - [ ] little o as a partial ordering on functions?
+ - [ ] Big Ω as a partial ordering on functions?
+ - [ ] Can O and o be combined into something like a strict order?
 
-TODO
-
-### Documentation
-Run
+## API Documentation
+You can [view the documentation online][docs] or build it locally:
 ```
 ./configure && make html && firefox html/toc.html
 ```
 to build the API documentation with `coqdoc`.
 
+## Installation
+
+You can build this package using the [Nix][nix] package manager:
+```
+nix-build . && ls result/lib/coq/8.5/user-contrib/BigO/
+```
+Alternatively, you can use the the standard
+```
+./configure && make
+```
+
+If you're using [Nix][nix], you can easily intergrate this library with your own
+package's `default.nix` or `shell.nix`, and Coq should automatically find it.
+```nix
+{
+  stdenv,
+  coq,
+  pkgs ? import <nixpkgs> { }
+}:
+let
+  coq_big_o = with pkgs; callPackage (fetchFromGitHub {
+    owner  = "siddharthist";
+    repo   = "coq-big-o";
+    rev    = "some commit hash"; # customize this
+    sha256 = "appropriate sha256 checksum"; # and this
+  }) { };
+in stdenv.mkDerivation {
+  name = "my-coq-project";
+  src = ./.;
+  buildInputs = [ coq coq_big_o ];
+  ...
+}
+```
+Otherwise, just copy what you built to somewhere that Coq will find it.
+
+## Design
+
+This project leans heavily on the [math-classes][math-classes] library for
+definitions of algebraic structures, specifically seminormed vector spaces.
+
+### Related Work
+
+I don't know of any. If anyone else is interested in formal complexity theory,
+let me know!
+
 ## Contributing
 
-Pull requests for fixes, new classes, extra instances, or more tests are
-welcome! Just run
+Pull requests for fixes, new results, or anything else are welcome! Just run
 ```
 nix-shell
 ```
 to be dropped into a shell with all dependencies installed.
  
-## Design and Related Work
-
-### Design
-TODO
-
-### References
-TODO
 
 [nix]: https://nixos.org/nix/
+[docs]: https://siddharthist.github.io/coq-big-o/html/toc.html
+[math-classes]: https://github.com/math-classes/math-classes

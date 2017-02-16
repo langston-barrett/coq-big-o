@@ -1,4 +1,4 @@
-Require Complexity.Util.Admitted.
+Require BigO.Util.Admitted.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.orders.dec_fields.

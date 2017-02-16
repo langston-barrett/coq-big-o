@@ -1,7 +1,7 @@
-Require Complexity.Util.Admitted.
-Require Import Complexity.BigO.Facts. (* f ∈ O(g) ↔ g ∈ Ω(f) *)
-Require Import Complexity.BigO.Notation.
-Require Import Complexity.Util.DecField.
+Require BigO.Util.Admitted.
+Require Import BigO.Facts. (* f ∈ O(g) ↔ g ∈ Ω(f) *)
+Require Import BigO.Notation.
+Require Import Util.DecField.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.

@@ -1,5 +1,5 @@
-Require Import Complexity.Util.DecField.
-Require Import Complexity.BigO.Notation.
+Require Import BigO.Notation.
+Require Import BigO.Util.DecField.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.
@@ -19,6 +19,7 @@ Section Facts.
   Informal proof/overview:
     - TODO
   *)
+
   Lemma O_and_Omega : forall f g : (V -> V), f ∈ O(g) <-> g ∈ Ω(f).
     split.
     {

@@ -1,4 +1,4 @@
-Require Export Complexity.BigO.Definition.
+Require Export BigO.Definition.
 
 (**
  Convenient UTF-8 notation. In Spacemacs, you can type the following text

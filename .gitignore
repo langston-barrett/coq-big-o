@@ -10,6 +10,7 @@ html/
 
 #???
 ..d
+src/scratch.v
 
 # Coq.gitignore
 *.aux

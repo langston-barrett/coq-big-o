@@ -1,9 +1,9 @@
-Require Import Complexity.BigO.Equivalence.
-Require Import Complexity.BigO.Facts.
-Require Import Complexity.BigO.Notation.
-Require Import Complexity.BigO.PartialOrder.Reflexivity.
-Require Import Complexity.BigO.PartialOrder.Transitivity.
-Require Import Complexity.Util.DecField.
+Require Import BigO.Equivalence.
+Require Import BigO.Facts.
+Require Import BigO.Notation.
+Require Import BigO.PartialOrder.Reflexivity.
+Require Import BigO.PartialOrder.Transitivity.
+Require Import BigO.Util.DecField.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.

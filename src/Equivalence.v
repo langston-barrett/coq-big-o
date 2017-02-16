@@ -1,16 +1,12 @@
-Require Import Complexity.BigO.Equivalence.Reflexivity.
-Require Import Complexity.BigO.Equivalence.Symmetry.
-Require Import Complexity.BigO.Equivalence.Transitivity.
-Require Import Complexity.BigO.Notation.
+Require Import BigO.Equivalence.Reflexivity.
+Require Import BigO.Equivalence.Symmetry.
+Require Import BigO.Equivalence.Transitivity.
+Require Import BigO.Notation.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.
 Require Import MathClasses.interfaces.vectorspace.
 Require Import MathClasses.orders.dec_fields.
-
-(**
- TODO: Reduce "admitted" work in Complexity.Util.Admitted
- *)
 
 Section Big_Theta_Equivalence.
   Context `{@SemiNormedSpace
