@@ -20,7 +20,7 @@ Bachmann-Landau notations based on seminormed vector spaces.
   - [x] Big Θ
   - [x] little o
   - [x] little ω
- - [x] (Optional) Unicode notation
+ - [x] (Optional) Unicode notation: `f ∈ ω(g) → g ∈ Ω(f)`
 
 ### Theorems & Lemmas
 
@@ -31,9 +31,10 @@ This is not an exhaustive list:
  - [x] Duality of Big O and Big Ω: f ∈ O(g) ↔ g ∈ Ω(f)
  - [x] f ∈ o(g) → f ∈ O(g)
  - [x] f ∈ ω(g) → f ∈ Ω(g)
- - [ ] little o as a partial ordering on functions?
- - [ ] Big Ω as a partial ordering on functions?
- - [ ] Can O and o be combined into something like a strict order?
+ - [ ] If you have ideas for useful lemmas, please open an issue!
+ <!-- - [ ] little o as a partial ordering on functions? -->
+ <!-- - [ ] Big Ω as a partial ordering on functions? -->
+ <!-- - [ ] Can O and o be combined into something like a strict order? -->
 
 ## API Documentation
 You can [view the documentation online][docs] or build it locally:
@@ -77,15 +78,13 @@ in stdenv.mkDerivation {
 ```
 Otherwise, just copy what you built to somewhere that Coq will find it.
 
-## Design
-
-This project leans heavily on the [math-classes][math-classes] library for
-definitions of algebraic structures, specifically seminormed vector spaces.
-
 ### Related Work
 
 I don't know of any. If anyone else is interested in formal complexity theory,
 let me know!
+
+This project leans heavily on the [math-classes][math-classes] library for
+definitions of algebraic structures, specifically seminormed vector spaces.
 
 ## Contributing
 

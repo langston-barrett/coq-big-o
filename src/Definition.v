@@ -1,6 +1,7 @@
-Require Import MathClasses.interfaces.abstract_algebra. (* ≤ *)
+Require Import MathClasses.interfaces.abstract_algebra.
+Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.
-(* Require Import MathClasses.orders.dec_fields.           (* Lt K *) *)
+Require Import MathClasses.orders.dec_fields.
 
 (**
  Based on Bachmann–Landau, but generalized to an arbitrary seminormed vector space.
@@ -8,8 +9,12 @@ Require Import MathClasses.interfaces.vectorspace.
  Should be considered experimental until some results are proved.
  *)
 Section Definitions.
-  Context `{Lt K}. (* Why isn't this automagic? *)
-  Context `{SemiNormedSpace K V}.
+  Context `{@SemiNormedSpace
+              K V
+              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
+              Ve Vop Vunit Vnegate smkv
+           }.
+  Context `{!FullPseudoSemiRingOrder Kle Klt}.
   (**
     A function f is less than a function g iff g is greater than f for all inputs
     past a certain size. We write this f ∈ O(g)
@@ -33,4 +38,4 @@ Section Definitions.
   Definition little_omega (f g : V -> V) : Prop :=
     forall k : K, 0 < k -> exists n0 : K, 0 < n0 /\ forall n : V, n0 ≤ ∥n∥ -> (k * ∥g n∥) ≤ ∥f n∥.
 End Definitions.
-Arguments big_O {K} {H} {V} {H1} {n} {Kmult} {Kzero} _ _.
+(* Arguments big_O {K} {H} {V} {H1} {n} {Kmult} {Kzero} _ _. *)
