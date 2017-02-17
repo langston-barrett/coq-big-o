@@ -1,4 +1,5 @@
 Require BigO.Util.Admitted.
+Require BigO.Util.DecField.
 Require Import BigO.Notation.
 Require Import BigO.PartialOrder.Transitivity.
 Require Import Coq.Classes.RelationClasses.
@@ -42,25 +43,6 @@ Section BigThetaTransitivity.
   Context `{!TotalOrder Kle}.
 
   Lemma big_Theta_trans: transitive _ big_Theta.
-
-    (* Some arithmetic that will come in handy soon *)
-    assert (Harith : forall x y z : K, 0 < x -> 0 < y -> x + y ≤ z -> x ≤ z).
-    {
-      intros x y z zero_lt_x zero_lt_y x_plus_y.
-      destruct (decompose_le x_plus_y) as [a Hyp].
-      destruct Hyp as [zero_le_a z_eq].
-
-      apply (compose_le x z (y + a)).
-      {
-        setoid_replace 0 with (0 + 0) by (now rewrite left_identity).
-        apply (plus_le_compat 0 _ 0 _); try assumption.
-        now apply lt_le.
-      }
-      {
-        now rewrite associativity.
-      }
-    }
-
     unfold transitive.
     intros f g h.
     unfold big_Theta in *.
@@ -104,9 +86,11 @@ Section BigThetaTransitivity.
 
           (* Prove that our new n_0 is greater than the previous *)
           intros n_ge_n0.
-          assert (n_ge_n0_f_g : n0_f_g ≤ ∥n∥) by (now apply (Harith n0_f_g n0_g_h)).
+          assert (n_ge_n0_f_g : n0_f_g ≤ ∥n∥) by
+              (now apply (DecField.plus_le n0_f_g n0_g_h)).
           assert (n_ge_n0_g_h : n0_g_h ≤ ∥n∥) by
-              (rewrite commutativity in n_ge_n0; now apply (Harith n0_g_h n0_f_g)).
+              (rewrite commutativity in n_ge_n0;
+               now apply (DecField.plus_le n0_g_h n0_f_g)).
           clear n_ge_n0.
 
           assert (fn_le_gn : (k_f_g * ∥g n∥) ≤ ∥f n∥) by (now apply HOm_f_g).

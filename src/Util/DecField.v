@@ -4,6 +4,26 @@ Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.orders.dec_fields.
 Require Import MathClasses.orders.semirings.
 
+Section NoOrder.
+  Context `{DecField K}.
+  Context `{!FullPseudoSemiRingOrder Kle Klt}.
+  Lemma plus_le : forall x y z : K, 0 < x -> 0 < y -> x + y ≤ z -> x ≤ z.
+    intros x y z zero_lt_x zero_lt_y x_plus_y.
+    destruct (decompose_le x_plus_y) as [a Hyp].
+    destruct Hyp as [zero_le_a z_eq].
+
+    apply (compose_le x z (y + a)).
+    {
+      setoid_replace 0 with (0 + 0) by (now rewrite left_identity).
+      apply (plus_le_compat 0 _ 0 _); try assumption.
+      now apply lt_le.
+    }
+    {
+      now rewrite associativity.
+    }
+  Qed.
+End NoOrder.
+
 Section DecFieldLemmas.
   Context `{DecField K}.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
