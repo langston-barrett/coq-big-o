@@ -90,9 +90,9 @@ Section BigOTransitivity.
 
         (* Prove that our new n_0 is greater than the previous *)
         intros n_ge_n0.
-        assert (n_ge_n0_f_g : n0_f_g ≤ ∥n∥) by (now apply (Harith n0_f_g n0_g_h)).
+        assert (n_ge_n0_f_g : n0_f_g ≤ ∥n∥) by (now apply (plus_le n0_f_g n0_g_h)).
         assert (n_ge_n0_g_h : n0_g_h ≤ ∥n∥) by
-            (rewrite commutativity in n_ge_n0; now apply (Harith n0_g_h n0_f_g)).
+            (rewrite commutativity in n_ge_n0; now apply (plus_le n0_g_h n0_f_g)).
         clear n_ge_n0.
 
         assert (fn_le_gn : ∥f n∥ ≤ k_f_g * ∥g n∥) by (now apply HO_f_g).

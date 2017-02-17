@@ -116,4 +116,7 @@ Section Facts.
     exists n0.
     split; assumption.
   Qed.
+
+  (* Lemma big_Omega_mult_constant : ∀ (f g : (V -> V)) (c : K), f ∈ Ω(g) -> f ∈ Ω(c * g). *)
+  (* Lemma big_O_mult_constant : ∀ (f g : (V -> V)) (c : K), f ∈ O(g) -> f ∈ O(c * g). *)
 End Facts.
