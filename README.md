@@ -28,14 +28,14 @@ Bachmann-Landau notations based on seminormed vector spaces.
 
 ### Definitions
 
- - [x] Bachmann-Landau notations
-  - [x] Big O
-  - [x] Big Ω
-  - [x] Big Θ
-  - [x] little o
-  - [x] little ω
-
- - [x] (Optional) Unicode notation: `f ∈ ω(g) → g ∈ Ω(f)`
+ - Bachmann-Landau notations
+  - Big O
+  - Big Ω
+  - Big Θ
+  - little o
+  - little ω
+ - (Optional) Unicode notation: `f ∈ ω(g) → g ∈ Ω(f)`
+ - Alternate definitions and proofs of their equivalence
 
 ### Theorems & Lemmas
 
@@ -46,6 +46,8 @@ This is not an exhaustive list:
  - [x] Duality of Big O and Big Ω: f ∈ O(g) ↔ g ∈ Ω(f)
  - [x] f ∈ o(g) → f ∈ O(g)
  - [x] f ∈ ω(g) → f ∈ Ω(g)
+ - [x] Various facts about the compositions of functions
+ - [x] Indifference of these notations to multiplication by constants
  - [ ] If you have ideas for useful lemmas, please open an issue!
  <!-- - [ ] little o as a partial ordering on functions? -->
  <!-- - [ ] Big Ω as a partial ordering on functions? -->

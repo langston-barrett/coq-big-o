@@ -37,23 +37,6 @@ Section BigOTransitivity.
   Lemma big_O_trans: transitive _ big_O.
 
     (* Some arithmetic that will come in handy soon *)
-    assert (Harith : forall x y z : K, 0 < x -> 0 < y -> x + y ≤ z -> x ≤ z).
-    {
-      intros x y z zero_lt_x zero_lt_y x_plus_y.
-      destruct (decompose_le x_plus_y) as [a Hyp].
-      destruct Hyp as [zero_le_a z_eq].
-
-      apply (compose_le x z (y + a)).
-      {
-        setoid_replace 0 with (0 + 0) by (now rewrite left_identity).
-        apply (plus_le_compat 0 _ 0 _); try assumption.
-        now apply lt_le.
-      }
-      {
-        now rewrite associativity.
-      }
-    }
-
     unfold transitive.
     intros f g h.
     unfold big_Theta in *.
