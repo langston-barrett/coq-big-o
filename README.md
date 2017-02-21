@@ -43,6 +43,7 @@ This is not an exhaustive list:
 
  - [x] Big Θ as an equivalence relation on functions
  - [x] Big O as a partial ordering on functions
+ - [ ] Big Ω as a partial ordering on functions
  - [x] Duality of Big O and Big Ω: f ∈ O(g) ↔ g ∈ Ω(f)
  - [x] f ∈ o(g) → f ∈ O(g)
  - [x] f ∈ ω(g) → f ∈ Ω(g)

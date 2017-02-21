@@ -46,8 +46,7 @@ Section BigThetaTransitivity.
     unfold transitive.
     intros f g h.
     unfold big_Theta in *.
-    intros H_f_g H_g_h;
-      split.
+    intros H_f_g H_g_h; split.
     { (* f ∈ O(h) *)
       now apply (big_O_trans f g h).
     }
@@ -55,18 +54,8 @@ Section BigThetaTransitivity.
       unfold big_Omega.
 
       (* Unfurl our hypothesis: f ∈ O(g) *)
-      destruct H_f_g as [_ HOm_f_g].
-      destruct HOm_f_g as [k_f_g HOm_f_g].
-      destruct HOm_f_g as [k_f_g_gt_0 HOm_f_g].
-      destruct HOm_f_g as [n0_f_g HOm_f_g].
-      destruct HOm_f_g as [n0_f_g_gt_0 HOm_f_g].
-
-      (* Unfurl our hypothesis: g ∈ O(h) *)
-      destruct H_g_h as [_ HOm_g_h].
-      destruct HOm_g_h as [k_g_h HOm_g_h].
-      destruct HOm_g_h as [k_g_h_gt_0 HOm_g_h].
-      destruct HOm_g_h as [n0_g_h HOm_g_h].
-      destruct HOm_g_h as [n0_g_h_gt_0 HOm_g_h].
+      destruct H_f_g  as [_ [k_f_g [k_f_g_gt_0 [n0_f_g [n0_f_g_gt_0 HOm_f_g]]]]].
+      destruct H_g_h  as [_ [k_g_h [k_g_h_gt_0 [n0_g_h [n0_g_h_gt_0 HOm_g_h]]]]].
 
       exists (k_f_g * k_g_h).
       split.

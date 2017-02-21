@@ -40,20 +40,11 @@ Section BigOTransitivity.
     unfold transitive.
     intros f g h.
     unfold big_Theta in *.
-    intros H_f_g H_g_h.
     unfold big_O.
 
-    (* Unfurl our hypothesis: f ∈ O(g) *)
-    destruct H_f_g as [k_f_g HO_f_g].
-    destruct HO_f_g as [k_f_g_gt_0 HO_f_g].
-    destruct HO_f_g as [n0_f_g HO_f_g].
-    destruct HO_f_g as [n0_f_g_gt_0 HO_f_g].
-
-    (* Unfurl our hypothesis: g ∈ O(h) *)
-    destruct H_g_h as [k_g_h HO_g_h].
-    destruct HO_g_h as [k_g_h_gt_0 HO_g_h].
-    destruct HO_g_h as [n0_g_h HO_g_h].
-    destruct HO_g_h as [n0_g_h_gt_0 HO_g_h].
+    (* Unfurl our hypotheses: f ∈ O(g), g ∈ O(h) *)
+    intros [k_f_g [k_f_g_gt_0 [n0_f_g [n0_f_g_gt_0 HO_f_g]]]]
+           [k_g_h [k_g_h_gt_0 [n0_g_h [n0_g_h_gt_0 HO_g_h]]]].
 
     exists (k_f_g * k_g_h).
     split.
