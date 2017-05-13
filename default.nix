@@ -19,13 +19,16 @@ let
 
   ### Dependencies
   coq = pinned_pkgs.coq_8_5;
+  math_classes = pkgs.callPackage ./nix/math-classes.nix { };
 
 in with pinned_pkgs; stdenv.mkDerivation {
   name = "coq${coq.coq-version}-big-o";
   src = ./.;
   buildInputs = [
     coq
-    coqPackages_8_5.math-classes
+    # TODO: update to a version of math-classes that includes the triangle inequality
+    math_classes
+    # coqPackages_8_5.math-classes
   ];
   enableParallelBuilding = true;
   installFlags = "COQLIB=$(out)/lib/coq/${coq.coq-version}/";

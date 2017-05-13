@@ -1,8 +1,20 @@
 Require Import BigO.Notation.
-Require Import BigO.Util.DecField.
+Require Import MathClasses.theory.abs.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.vectorspace.
 Require Import MathClasses.interfaces.orders.
+
+(* TODO: move me *)
+Instance neq_symmetric : ∀ `{Equiv A} `{Symmetric A (=)}, @Symmetric A (≠).
+Proof.
+  unfold Symmetric.
+  intros A Ae Aes x y x_neq_y.
+  unfold not.
+  unfold not in x_neq_y.
+  intros y_eq_x.
+  apply x_neq_y.
+  now apply Aes.
+Qed.
 
 Section BigThetaReflexive.
   Context `{@SemiNormedSpace
@@ -11,6 +23,8 @@ Section BigThetaReflexive.
               Ve Vop Vunit Vnegate smkv
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
+  Context `{forall x y : K, Decision (x = y)}.
+  Instance df : DecField K := vs_field.
 
   Lemma big_Theta_refl : reflexive _ big_Theta.
     unfold reflexive.
@@ -21,26 +35,23 @@ Section BigThetaReflexive.
       unfold big_O.
       exists 1. (* our constant k *)
       split.
-       - exact zero_lt_one_dec.
-       - exists 1. (* our constant *)
-        intros.
-        split.
-         * exact zero_lt_one_dec.
-         * intros n one_leq_n.
-           rewrite left_identity.
-           apply reflexivity.
+      - apply (decfield_nontrivial K).
+      - exists mon_unit. (* our constant n0 *)
+        intros n nlen.
+        rewrite sn_scale.
+        rewrite abs_1.
+        now rewrite left_identity.
     }
-
     { (* big_Omega x x *)
       unfold big_Omega.
       exists 1. (* our constant *)
       split.
-       - exact zero_lt_one_dec.
-       - exists 1. (* our constant *)
-         split.
-         * exact zero_lt_one_dec.
-         * intros n one_leq_n.
-           now rewrite left_identity.
+      - apply (decfield_nontrivial K).
+      - exists mon_unit. (* our constant *)
+        intros n nlen.
+        rewrite sn_scale.
+        rewrite abs_1.
+        now rewrite left_identity.
     }
   Qed.
 End BigThetaReflexive.

@@ -13,3 +13,9 @@ Notation "f ∈ Ω( g )" := (big_Omega f g) (at level 50, no associativity).
 Notation "f ∈ Θ( g )" := (big_Theta f g) (at level 50, no associativity).
 Notation "f ∈ o( g )" := (little_o f g) (at level 50, no associativity).
 Notation "f ∈ ω( g )" := (little_omega f g) (at level 50, no associativity).
+
+Notation "f ∈ O(1)" := (big_O f (fun _ => 1)) (at level 50, no associativity).
+Notation "f ∈ Ω(1)" := (big_Omega f (fun _ => 1)) (at level 50, no associativity).
+Notation "f ∈ Θ(1)" := (big_Theta f (fun _ => 1)) (at level 50, no associativity).
+Notation "f ∈ o(1)" := (little_o f (fun _ => 1)) (at level 50, no associativity).
+Notation "f ∈ ω(1)" := (little_omega f (fun _ => 1)) (at level 50, no associativity).

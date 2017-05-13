@@ -1,10 +1,21 @@
 Require BigO.Util.Admitted.
 Require Import MathClasses.interfaces.abstract_algebra.
 Require Import MathClasses.interfaces.orders.
+Require Import MathClasses.theory.dec_fields.
 Require Import MathClasses.orders.dec_fields.
 Require Import MathClasses.orders.semirings.
 
 Section NoOrder.
+  Context `{DecField K} `{∀ x y: K, Decision (x = y)}.
+  Global Instance nozerodivisors_decfield : NoZeroDivisors K :=
+    zero_product_no_zero_divisors.
+  Lemma nonzero_mult : ∀ u v : K, u ≠ 0 → v ≠ 0 → u * v ≠ 0.
+  Proof.
+    apply MathClasses.theory.rings.mult_ne_0.
+  Qed.
+End NoOrder.
+
+Section SomeOrder.
   Context `{DecField K}.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
   Lemma plus_le : forall x y z : K, 0 < x -> 0 < y -> x + y ≤ z -> x ≤ z.
@@ -22,7 +33,7 @@ Section NoOrder.
       now rewrite associativity.
     }
   Qed.
-End NoOrder.
+End SomeOrder.
 
 Section DecFieldLemmas.
   Context `{DecField K}.
