@@ -8,11 +8,21 @@ Require Import MathClasses.orders.dec_fields.
 Section Facts.
   Context `{@SemiNormedSpace
               K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
+              Kequiv Kle Kzero Knegate Kabs Vnorm Kequiv Kplus Kmult Kzero Kone
+              Knegate Krecip Ve Vop Vunit Vnegate smkv
+           }.
+  Context `{@SemiNormedSpace
+              K W1
+              Kequiv Kle Kzero Knegate Kabs Wnorm1 Kequiv Kplus Kmult Kzero Kone
+              Knegate Krecip We1 Wop1 Wunit1 Wnegate1 smkw1
+           }.
+  Context `{@SemiNormedSpace
+              K W2
+              Kequiv Kle Kzero Knegate Kabs Wnorm2 Kequiv Kplus Kmult Kzero Kone
+              Knegate Krecip We2 Wop2 Wunit2 Wnegate2 smkw2
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
-  Context `{forall x y : K, Decision (x = y)}.
+  Context `{!forall x y : K, Decision (x = y)}.
 
   (**
   A general and useful result about the duality of O and Ω.
@@ -20,25 +30,32 @@ Section Facts.
     - TODO
   *)
 
-  Lemma O_and_Omega : forall f g : (V -> V), f ∈ O(g) <-> g ∈ Ω(f).
+  Lemma O_and_Omega : forall f g : (V →  V), f ∈ O(g) ↔ g ∈ Ω(f).
     split.
     {
       (* Unfurl our hypothesis *)
       intros f_O_g.
       unfold big_O in f_O_g.
-      destruct f_O_g as [k [zero_lt_k [n0 [zero_lt_n0 f_O_g]]]].
+      destruct f_O_g as [k [zero_ne_k [n0 f_O_g]]].
 
       unfold big_Omega.
       exists (/k).
       split.
-      {
-        now apply MathClasses.orders.dec_fields.pos_dec_recip_compat.
+      { (* /k ≠ 0 *)
+        unfold not.
+        intros k_recip_zero.
+        apply zero_ne_k.
+        now apply MathClasses.theory.dec_fields.dec_recip_zero.
       }
       {
         exists n0.
-        split; try assumption.
         intros n n0_le_n.
-        assert (∥ f n ∥ ≤ k * (∥ g n ∥)) by (now apply f_O_g).
+        assert (∥ k · (g n) ∥ = abs k * ∥ (g n) ∥).
+        Check @snm_scale K.
+        apply (@snm_scale K Kequiv Kplus Kmult Kzero Kone Knegate Klt).
+        assert (∥ f n ∥ = (abs k) * (∥ g n ∥)).
+        symmetry.
+          (* by (now apply f_O_g). *)
 
         assert (inv_k_gt_0 : 0 < / k) by
             (now apply MathClasses.orders.dec_fields.pos_dec_recip_compat).

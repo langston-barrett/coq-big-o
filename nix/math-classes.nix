@@ -6,8 +6,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner  = "math-classes";
     repo   = "math-classes";
-    rev    = "6f523f46d378913d0294094a5273a6a8de0b5dbf";
-    sha256 = "1rm0h2yqxdv52wmc1zax4bb6ir89h9ij3jhzbdl8829n22b6v7mn";
+    rev    = "578caf8adddc676e977f4ee12e483ed21e7ed870";
+    sha256 = "05j11isvwg7sxsa386dixkrzxgf6lq0y8macmb1j156cg3kpfr5r";
   };
 
   buildInputs = [ coq ];
