@@ -1,13 +1,11 @@
-Require BigO.Util.Admitted.
-Require BigO.Util.DecField.
 Require Import BigO.Notation.
 Require Import BigO.PartialOrder.Transitivity.
 Require Import Coq.Classes.RelationClasses.
-Require Import MathClasses.interfaces.abstract_algebra.
+Require Import MathClasses.interfaces.canonical_names.
 Require Import MathClasses.interfaces.orders.
 Require Import MathClasses.interfaces.vectorspace.
-Require Import MathClasses.orders.dec_fields.
 Require Import Util.DecField.
+Require Util.Admitted.
 
 (**
   Informal proof/overview:
@@ -36,18 +34,30 @@ Require Import Util.DecField.
 Section BigThetaTransitivity.
   Context `{SemiNormedSpace K V}.
   Context `{@SemiNormedSpace
-              K W
-              Ke Kle Kzero Knegate Kabs Wnorm Ke Kplus Kmult Kzero Kone
-              Knegate Krecip We Wop Wunit Wnegate smkw
+              K W1
+              Ke Kle Kzero Knegate Kabs Wnorm1 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We1 Wop1 Wunit1 Wnegate1 smkw1
+           }.
+  Context `{@SemiNormedSpace
+              K W2
+              Ke Kle Kzero Knegate Kabs Wnorm2 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We2 Wop2 Wunit2 Wnegate2 smkw2
+           }.
+  Context `{@SemiNormedSpace
+              K W3
+              Ke Kle Kzero Knegate Kabs Wnorm3 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We3 Wop3 Wunit3 Wnegate3 smkw3
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
 
-  (* TODO: generalize as in partial order *)
-  Lemma big_Theta_trans: transitive (V → W) big_Theta.
+  (* Lemma big_Theta_trans: transitive (V → W) big_Theta. *)
+  Lemma big_Theta_trans :
+    ∀ (f : V → W1) (g : V → W2) (h : V → W3),
+      f ∈ Θ(g) → g ∈ Θ(h) → f ∈ Θ(h).
     unfold transitive.
     intros f g h.
     unfold big_Theta in *.
-    intros H_f_g H_g_h; split.
+    intros H_f_g H_g_h. split.
     { (* f ∈ O(h) *)
       now apply (big_O_trans f g h).
     }
