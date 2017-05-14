@@ -18,30 +18,29 @@ Require Import MathClasses.orders.dec_fields.
  *)
 
 Section BigOPartialOrder.
+  Context `{SemiNormedSpace K V}.
   Context `{@SemiNormedSpace
-              K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
+              K W
+              Ke Kle Kzero Knegate Kabs Wnorm Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We Wop Wunit Wnegate smkw
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
-  Context `{!TotalOrder Kle}.
+  (* Context `{!TotalOrder Kle}. *)
   Context `{forall x y : K, Decision (x = y)}.
 
-  Instance big_O_Preorder : @PreOrder (V -> V) big_O.
-  Proof.
-    split.
-     - exact big_O_Reflexive.
-     - exact big_O_Transitive.
-  Qed.
+  Instance big_O_Preorder : @PreOrder (V → W) big_O :=
+    { PreOrder_Reflexive  := big_O_refl 
+    ; PreOrder_Transitive := big_O_trans  
+    }.
 
   Instance big_O_Antisymmetric :
-    @Antisymmetric (V -> V) big_Theta big_Theta_Equivalence big_O.
+    @Antisymmetric (V → W) big_Theta big_Theta_Equivalence big_O.
   Proof.
     split; try assumption.
     now apply O_and_Omega.
   Qed.
 
-  Instance big_O_PartialOrder : @PartialOrder (V -> V) big_Theta big_O.
+  Instance big_O_PartialOrder : @PartialOrder (V → W) big_Theta big_O.
   Proof.
     split.
      - exact big_Theta_Setoid.
@@ -49,16 +48,16 @@ Section BigOPartialOrder.
         unfold equiv in *; unfold le in *.
       {
         intros x_O_x0.
-        destruct H1 as [x_O_y x_Ω_y].
-        destruct H2 as [x0_O_y0 x0_Ω_y0].
+        destruct H6 as [x_O_y x_Ω_y].
+        destruct H7 as [x0_O_y0 x0_Ω_y0].
         assert (y_O_x : y ∈ O(x)) by (now apply O_and_Omega).
         transitivity x; try assumption.
         transitivity x0; try assumption.
       }
       {
         intros y_O_y0.
-        destruct H1 as [x_O_y x_Ω_y].
-        destruct H2 as [x0_O_y0 x0_Ω_y0].
+        destruct H6 as [x_O_y x_Ω_y].
+        destruct H7 as [x0_O_y0 x0_Ω_y0].
         assert (y0_O_x0 : y0 ∈ O(x0)) by (now apply O_and_Omega).
         transitivity y; try assumption.
         transitivity y0; try assumption.

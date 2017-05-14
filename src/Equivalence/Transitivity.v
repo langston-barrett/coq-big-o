@@ -42,6 +42,7 @@ Section BigThetaTransitivity.
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
 
+  (* TODO: generalize as in partial order *)
   Lemma big_Theta_trans: transitive (V → W) big_Theta.
     unfold transitive.
     intros f g h.
