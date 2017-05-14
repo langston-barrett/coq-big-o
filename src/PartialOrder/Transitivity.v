@@ -29,12 +29,29 @@ Require Import MathClasses.orders.dec_fields.
 Section BigOTransitivity.
   Context `{@SemiNormedSpace
               K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
+              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone
+              Knegate Krecip Ve Vop Vunit Vnegate smkv
+           }.
+  Context `{@SemiNormedSpace
+              K W1
+              Ke Kle Kzero Knegate Kabs Wnorm1 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We1 Wop1 Wunit1 Wnegate1 smkw1
+           }.
+  Context `{@SemiNormedSpace
+              K W2
+              Ke Kle Kzero Knegate Kabs Wnorm2 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We2 Wop2 Wunit2 Wnegate2 smkw2
+           }.
+  Context `{@SemiNormedSpace
+              K W3
+              Ke Kle Kzero Knegate Kabs Wnorm3 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We3 Wop3 Wunit3 Wnegate3 smkw3
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
 
-  Lemma big_O_trans: transitive _ big_O.
+  Lemma big_O_trans :
+    ∀ (f : V → W1) (g : V → W2) (h : V → W3),
+      f ∈ O(g) → g ∈ O(h) → f ∈ O(h).
 
     (* Some arithmetic that will come in handy soon *)
     unfold transitive.
@@ -81,7 +98,4 @@ Section BigOTransitivity.
       }
     }
   Qed.
-
-  Instance big_O_Transitive : Transitive big_O :=
-    { transitivity := big_O_trans }.
 End BigOTransitivity.

@@ -8,8 +8,18 @@ Require Import MathClasses.orders.dec_fields.
 Section Facts.
   Context `{@SemiNormedSpace
               K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
+              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone
+              Knegate Krecip Ve Vop Vunit Vnegate smkv
+           }.
+  Context `{@SemiNormedSpace
+              K W1
+              Ke Kle Kzero Knegate Kabs Wnorm1 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We1 Wop1 Wunit1 Wnegate1 smkw1
+           }.
+  Context `{@SemiNormedSpace
+              K W2
+              Ke Kle Kzero Knegate Kabs Wnorm2 Ke Kplus Kmult Kzero Kone
+              Knegate Krecip We2 Wop2 Wunit2 Wnegate2 smkw2
            }.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
   Context `{forall x y : K, Decision (x = y)}.
@@ -20,12 +30,12 @@ Section Facts.
     - TODO
   *)
 
-  Lemma O_and_Omega : forall f g : (V -> V), f ∈ O(g) <-> g ∈ Ω(f).
+  Lemma O_and_Omega : ∀ (f : V → W1) (g : V → W2), f ∈ O(g) ↔ g ∈ Ω(f).
     split.
     {
       (* Unfurl our hypothesis *)
       intros f_O_g.
-      unfold big_O in f_O_g.
+      unfold big_O in *.
       destruct f_O_g as [k [zero_lt_k [n0 [zero_lt_n0 f_O_g]]]].
 
       unfold big_Omega.
@@ -58,7 +68,7 @@ Section Facts.
       intros g_Ω_f.
 
       (* Unfurl our hypothesis *)
-      unfold big_Omega in g_Ω_f.
+      unfold big_Omega in *.
       destruct g_Ω_f as [k [zero_lt_k [n0 [zero_lt_n0 g_Ω_f]]]].
 
       unfold big_O.
@@ -92,7 +102,7 @@ Section Facts.
   (**
    Little o is strictly more stringent than big O.
    *)
-  Lemma o_implies_O : forall f g : (V -> V), f ∈ o(g) -> f ∈ O(g).
+  Lemma o_implies_O : ∀ (f : V → W1) (g : V → W2), f ∈ o(g) → f ∈ O(g).
     intros f g f_o_g.
     unfold big_O.
 
@@ -106,7 +116,7 @@ Section Facts.
   (**
    Little ω is strictly more stringent than big Ω.
    *)
-  Lemma omega_implies_Omega : forall f g : (V -> V), f ∈ ω(g) -> f ∈ Ω(g).
+  Lemma omega_implies_Omega : ∀ (f : V → W1) (g : V → W2), f ∈ ω(g) -> f ∈ Ω(g).
     intros f g f_ω_g.
     unfold big_Omega.
 
