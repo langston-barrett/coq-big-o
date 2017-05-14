@@ -5,14 +5,11 @@ Require Import MathClasses.interfaces.vectorspace.
 Require Import MathClasses.interfaces.orders.
 
 Section BigThetaReflexive.
-  Context `{@SemiNormedSpace
-              K V
-              Ke Kle Kzero Knegate Kabs Vnorm Ke Kplus Kmult Kzero Kone Knegate Krecip
-              Ve Vop Vunit Vnegate smkv
-           }.
+  Context `{SemiNormedSpace K V}.
+  Context `{SemiNormedSpace K W}.
   Context `{!FullPseudoSemiRingOrder Kle Klt}.
 
-  Lemma big_Theta_refl : reflexive _ big_Theta.
+  Lemma big_Theta_refl : reflexive (V → W) big_Theta.
     unfold reflexive.
     intros f.
     unfold big_Theta.
@@ -26,7 +23,7 @@ Section BigThetaReflexive.
         intros.
         split.
          * exact zero_lt_one_dec.
-         * intros n one_leq_n.
+         * intros n' one_leq_n.
            rewrite left_identity.
            apply reflexivity.
     }
@@ -39,7 +36,7 @@ Section BigThetaReflexive.
        - exists 1. (* our constant *)
          split.
          * exact zero_lt_one_dec.
-         * intros n one_leq_n.
+         * intros n' one_leq_n.
            now rewrite left_identity.
     }
   Qed.
